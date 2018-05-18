@@ -1,0 +1,22 @@
+{
+    "name": "mint/evaluation-back-oquiz-tonyp85-25",
+    "description": "quizz de culture générale",
+    "type": "project",
+    "require": {
+        "altorouter/altorouter": "^1.2",
+        "league/plates": "^3.3",
+        "symfony/var-dumper": "^3.4"
+    },
+    "authors": [
+        {
+            "name": "Anthony.p",
+            "email": "anthony-paulin@etudiant.oclock.io"
+        }
+    ],
+    "minimum-stability": "stable",
+     "autoload": {
+        "psr-4": {
+            "Oquiz\\": "src/"
+        }
+    }
+}
