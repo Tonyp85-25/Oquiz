@@ -1,0 +1,42 @@
+
+body {
+  font-family: 'Sunflower', sans-serif;
+}
+
+header {
+  display: flex;
+    justify-content: space-between;
+    margin-left: 8.5em;
+    padding-top: 1em;
+}
+h1 {
+color: #1559a2;
+font-weight: 600;
+font-size: 4em;
+}
+.nav a {
+  color: #1559a2;
+}
+
+i {
+  margin-right: 0.25em;
+}
+
+.bienvenue{
+      margin-top: 4em;
+      padding: 0 8.5em;
+}
+
+.quiz {
+  margin-top: 4em;
+}
+
+.question {
+  margin-bottom: 2em;
+}
+
+.row a h3{
+  text-decoration: none;
+  font-weight: bold;
+  color: #1559a2;
+}

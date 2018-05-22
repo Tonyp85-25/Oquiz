@@ -1,12 +1,11 @@
 <?php
 
 namespace Oquiz\Models;
+use Oquiz\Database;
+use PDO;
 
 class QuizModel {
 
-    /**
-    *  @var int
-    */
 	private $id;
     /**
     *  @var string
@@ -21,7 +20,9 @@ class QuizModel {
     /**
     *  @var int
     */
-	private $authorId;
+	private $id_author;
+
+    const TABLE_NAME = 'quizzes';
 
 	protected  function insert(){
 
@@ -31,11 +32,45 @@ class QuizModel {
 
 	}
 
+    //On crée la fonction qui doit afficher tous les quiz.
+    public static function findAll(){
+        //On crée la requête SQL
+        $sql = '
+            SELECT * FROM '.self::TABLE_NAME.'
+            
+        ';
+         // Utilisation de notre classe Database pour se connecter à la database
+        $pdo = Database::getPDO();
+        // exécution de la requête
+        $pdoStatement = $pdo->query($sql);
+        // Je veux récupérer tous les résultats sous forme de tableau d'objet QuizModel
+        // on doit préciser le FQCN de la classe
+        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
+        // On retourne les résultats
+        return $results;
+    }
+
+    public static function findById($id){
+        $sql ='
+        SELECT * FROM '.self::TABLE_NAME.'
+        WHERE id = :id
+        ';
+        // Je prépare ma requête
+      $pdoStatement = Database::getPDO()->prepare($sql);
+      // Je "bind" les données/token/jeton de ma requête
+      $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
+        // J'exécute ma requête
+      $pdoStatement->execute();
+      // Je récupère LE résultat
+      $result = $pdoStatement->fetchObject(static::class);
+      return $result;
+    }
+
 	/* GETTERS*/
+
     public function getId(){
         return $this->id;
     }
-
     public function getTitle(){
         return $this->title;
     }
@@ -43,7 +78,7 @@ class QuizModel {
         return $this->description;
     }
     public function getAuthorId(){
-        return $this->authorId;
+        return $this->id_author;
     }
     /*SETTERS*/
     public function setTitle($title){
@@ -58,7 +93,7 @@ class QuizModel {
     }
     public function setAuthorId($authorId){
         if (!empty($authorId)){
-            $this->authorId = $authorId;
+            $this->id_author = $authorId;
         }
     }
 
