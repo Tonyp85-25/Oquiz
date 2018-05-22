@@ -5,15 +5,15 @@ use Oquiz\Models\QuizModel;
 class MainController extends CoreController{
 
 
-
-
 	public function home() {
 
         $quizzes =QuizModel::findAll();
+        $quizModel = new QuizModel;
 
-        
+
          echo $this->templates->render('main/home', [
              'quizzes'=>$quizzes,
+             'quiz' => $quizModel
              ]) ;
 	}
 

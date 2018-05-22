@@ -1,6 +1,8 @@
 <?php
 namespace Oquiz\Controllers;
 use Oquiz\Models\QuizModel;
+use Oquiz\Models\UserModel;
+use Oquiz\Utils\User;
 
 class UserController extends CoreController{
 
@@ -13,9 +15,10 @@ class UserController extends CoreController{
              'quizzes'=>$quizzes,
              ]) ;
 	}
+
     public function signin(){
 
-        echo $this->templates->render('front/signin');
+        echo $this->templates->render('user/signin');
     }
 
     public function signinPost(){
@@ -43,18 +46,22 @@ class UserController extends CoreController{
         if (count($errorList) == 0) {
             // Je récupère le user correspondant au mot de passe
             // la méthode renvoie false si aucun résultat
-            $userModel = UserModel::findByEmailOrUsername($email);
+            $userModel = UserModel::findByEmail($email);
 
                     // Si j'ai un résultat sous forme d'objet
             if ($userModel !== false) {
                 // Alors je test le mot de passe
                 if (password_verify($password, $userModel->getPassword())) {
                     // On stocke le user en session
-                    // C'est suffisant pour connecter l'utilisateur
-                    // Par contre, on doit convertir l'objet en StdClass
+
+
                     // $_SESSION['user'] = $userModel;
                     User::setUser($userModel);
-
+                     // On affiche un JSON disant que tout est ok
+                    $this->sendJSON([
+                        'code' => 1,
+                        'url' => $this->router->generate('home')
+                    ]);
                 }
                 else {
                     $errorList[] = 'Le mot de passe est incorrect pour cet email';
@@ -64,7 +71,23 @@ class UserController extends CoreController{
                 $errorList[] = 'Aucun compte n\'a été trouvé pour cet email';
             }
         }
+        // J'envoie (j'affiche) les erreurs au format JSON
+        $this->sendJSON([
+            'code' => 2,
+            'errorList' => $errorList
+        ]);
     }
+
+	public function signout(){
+		if (User::isConnected()){
+            unset($_SESSION['user']);
+			session_destroy();
+			$this->redirectToRoute('home');
+		} else {
+			$this->redirectToRoute('signin');
+		}
+
+	}
 
 
 }

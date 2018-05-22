@@ -37,7 +37,7 @@ class QuizModel {
         //On crée la requête SQL
         $sql = '
             SELECT * FROM '.self::TABLE_NAME.'
-            
+
         ';
          // Utilisation de notre classe Database pour se connecter à la database
         $pdo = Database::getPDO();
@@ -65,6 +65,23 @@ class QuizModel {
       $result = $pdoStatement->fetchObject(static::class);
       return $result;
     }
+
+	public static function findAuthorByQuiz($id){
+		$sql ='
+			SELECT `first_name`,`last_name` FROM `users` RIGHT JOIN quizzes On users.id = '.self::TABLE_NAME.'.id_author WHERE '.self::TABLE_NAME.'.id = :id
+		';
+		// Je prépare ma requête
+      $pdoStatement = Database::getPDO()->prepare($sql);
+      // Je "bind" les données/token/jeton de ma requête
+      $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
+        // J'exécute ma requête
+      $pdoStatement->execute();
+      // Je récupère LE résultat
+      $result = $pdoStatement->fetchObject(static::class);
+      return $result;
+	}
+
+    
 
 	/* GETTERS*/
 
