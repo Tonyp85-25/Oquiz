@@ -34,6 +34,7 @@ public function quiz($allParams){
         dump($_POST);
         // Je récupère les données
         $answers = array();
+        
     }
 
 

@@ -23,30 +23,15 @@
                   </div>
                   <div class="card-body">
                       <?php  $props = $question->shuffleProps($currentQuestion->getId())?>
+                      <?php for ($i=0; $i<4; $i++)  :?>                                 
                       <div class="form-check">
-                          <input class="form-check-input" type="radio" name="proposition<?= $currentQuestion->getId()?>" id="proposition1" value="option1" checked>
-                          <label class="form-check-label" for="proposition1">
-                             <?= $props[0] ?>
+                          <input class="form-check-input" type="radio" name="<?= $currentQuestion->getId()?>" id="proposition.$i" value="<?= $props[$i]?>" >
+                          <label class="form-check-label" for="proposition.$i">
+                             <?= $props[$i] ?>
                             </label>
                         </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="proposition<?= $currentQuestion->getId()?>" id="proposition2" value="option2">
-                  <label class="form-check-label" for="proposition2">
-                    <?= $props[1] ?>
-                  </label>
-                </div>
-                <div class="form-check">
-                      <input class="form-check-input" type="radio" name="proposition<?= $currentQuestion->getId()?>" id="proposition3" value="option1" checked>
-                      <label class="form-check-label" for="proposition3">
-                        <?= $props[2] ?>
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="proposition<?= $currentQuestion->getId()?>" id="proposition4" value="option2">
-                      <label class="form-check-label" for="proposition4">
-                        <?= $props[3] ?>
-                      </label>
-                    </div>
+                        <?php endfor; ?> 
+
                 </div>
                 <div class="card-footer text-muted anecdote" style="display:none">
                     <p>    <?= $currentQuestion->getAnecdote() ?></p>
@@ -55,7 +40,7 @@
             </div>
         </div>
         <?php endforeach; ?>
-            <button type="button" class="btn btn-primary btn-block"name="button">OK</button>
+            <button type="submit" class="btn btn-primary btn-block">OK</button>
 
         </form>
     </div>
@@ -63,7 +48,7 @@
 <!-- Utilisation de la méthode push de Plates pour ajouter du contenu à la section "js" du layout -->
 <?php $this->push('js') ?>
 <script>
-$('#formQuiz').on('submit', app.submitFormQuiz);
+// $('#formQuiz').on('submit', app.submitFormQuiz);
 
 </script>
 <?php $this->end('js') ?>

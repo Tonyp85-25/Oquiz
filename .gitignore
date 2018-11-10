@@ -1,6 +1,9 @@
 # Bundler
 vendor/
 
+#config file
+config.conf
+
 # NPM packages folder
 node_modules/
 
