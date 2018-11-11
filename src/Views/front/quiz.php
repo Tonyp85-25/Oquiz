@@ -10,7 +10,9 @@
  <?php if ($connectedUser !== false) : ?>
      <?=$this->insert('front/list-form', [
          'questions'=> $questions,
-         'question' => $question
+         'question' => $question,
+         'checked' => false,
+        'style' => '',
          ])?>
        <?php else : ?>
 

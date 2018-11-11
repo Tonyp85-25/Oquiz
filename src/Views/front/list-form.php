@@ -1,13 +1,18 @@
 
 
  <div class="container">
-    <div class="alert alert-primary" role="alert"id="newgame">
+ <?php if (!$checked): ?>
+    <div class="alert alert-primary" role="alert"id="newgame" >
       Nouveau jeu : répondez au maximum de questions avant de valider!
     </div>
+    <?php else : ?>
     <div class="alert alert-success" role="alert"id="result" style="display:none">
     <p>Votre score : <span id="score"></span> </p>
     <a href="#">Rejouer</a>
     </div>
+
+    <?php endif;?>
+
      <div class="row">
 
          <form class="row" action="" method="post" id="formQuiz">
@@ -15,8 +20,8 @@
 
          <?php foreach ($questions as $currentQuestion) :?>
           <div class="col-sm-4">
-              <div class="card question">
-                  <div class="card-header">
+              <div class="card question" >
+                  <div class="card-header" <?=$style ?> >
                       <?php $level = $question->findLevelByQuestion($currentQuestion->getId());
                       ?>
                       <h4><?= $currentQuestion->getQuestion() ?></h4> <span class="float-right badge badge-success"><?= $level->name ?></span>

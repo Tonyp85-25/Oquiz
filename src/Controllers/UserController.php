@@ -60,8 +60,9 @@ class UserController extends CoreController{
                      // On affiche un JSON disant que tout est ok
                     $this->sendJSON([
                         'code' => 1,
-                        'url' => $this->router->generate('home')
+                        'url' => $this->redirectToRoute('home')
                     ]);
+                   
                 }
                 else {
                     $errorList[] = 'Le mot de passe est incorrect pour cet email';

@@ -72,7 +72,24 @@ class QuestionModel {
       // Je récupère LE résultat
       $result = $pdoStatement->fetchObject(static::class);
       return $result;
-	}
+    }
+    
+    public static function findQuestionById($id){
+        $sql='
+            SELECT * FROM '.self::TABLE_NAME.'
+            WHERE id = :id
+        ';
+            // Je prépare ma requête
+          $pdoStatement = Database::getPDO()->prepare($sql);
+          // Je "bind" les données/token/jeton de ma requête
+          $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
+            // J'exécute ma requête
+          $pdoStatement->execute();
+          $result = $pdoStatement->fetchObject(static::class);
+          // On retourne les résultats
+          return $result;
+    
+        }
 
 
 
