@@ -2,7 +2,7 @@
 vendor/
 
 #config file
-src/config
+
 
 # NPM packages folder
 node_modules/
