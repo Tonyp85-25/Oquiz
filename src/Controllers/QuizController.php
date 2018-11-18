@@ -16,8 +16,8 @@ public function quiz($allParams){
     $questions = QuestionModel::findQuestionsByQuiz($id);
     $style= '';
     $score=0;
-    // On instancie le QuestionModel que l' on envoie en donnée dans notre vue afin de pouvoir utiliser la méthode shuffleProps et findLevel dans quiz.php
-    $questionModel = new QuestionModel;
+    
+    
     $answers =[];
 
 
@@ -25,7 +25,6 @@ public function quiz($allParams){
     echo $this->templates->render('front/quiz', [
         'quiz' => $quiz,
         'questions' => $questions,
-        'question' => $questionModel,
         'author' => $author,
         'played' => $played,
         'style' => $style,
@@ -70,7 +69,7 @@ public function quiz($allParams){
         $quiz = QuizModel::findById($id);
         $author = QuizModel::findAuthorByQuiz($id);
         $questions = QuestionModel::findQuestionsByQuiz($id);
-        $questionModel = new QuestionModel;
+        
 
         
         
@@ -78,7 +77,6 @@ public function quiz($allParams){
         echo $this->templates->render('front/quiz', [
               'quiz' => $quiz,
             'questions' => $questions,
-            'question' => $questionModel,
             'author' => $author,
               'played' => $played,
               'style' => $style,

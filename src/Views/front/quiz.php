@@ -11,10 +11,10 @@
      <?=$this->insert('front/list-form', [
          'quiz' => $quiz,
          'questions'=> $questions,
-         'question' => $question,
          'played' => $played,
         'style' => $style,
         'score' => $score,
+        'answers' =>$answers,
          ])?>
        <?php else : ?>
 

@@ -23,16 +23,16 @@
               <div class="card question" >
               <?php if ($played): ?>
                   <div class="card-header" <?=$style[$currentQuestion->getId()] ?> >
-                      <?php $level = $question->findLevelByQuestion($currentQuestion->getId());
+                      <?php $level = $currentQuestion->findLevelByQuestion($currentQuestion->getId());
                       ?>
                  <?php else : ?>
                       <div class="card-header" > 
-                      <?php $level = $question->findLevelByQuestion($currentQuestion->getId());?>
+                      <?php $level = $currentQuestion->findLevelByQuestion($currentQuestion->getId());?>
                  <?php endif;?>
                       <h4><?= $currentQuestion->getQuestion() ?></h4> <span class="float-right badge badge-success"><?= $level->name ?></span>
                   </div>
                   <div class="card-body">
-                      <?php  $props = $question->shuffleProps($currentQuestion->getId())?>
+                      <?php  $props = $currentQuestion->shuffleProps($currentQuestion->getId())?>
                       <?php for ($i=0; $i<4; $i++)  :?>                                 
                       <div class="form-check">
                       <?php $attr = (in_array($props[$i], $answers)) ? 'checked' : '' ;?>
@@ -40,21 +40,23 @@
                           <label class="form-check-label" for="proposition.$i">
                              <?= $props[$i] ?>
                             </label>
-                        </div>
+                        </div> 
                         <?php endfor; ?> 
 
                 </div>
-                <?php if ($played) :?>
+                <?php if ($played && $style[$currentQuestion->getId()] === 'style="background-color:green"' ) :?>
                 <div class="card-footer text-muted anecdote" >
                     <p>    <?= $currentQuestion->getAnecdote() ?></p>
-                    <a href="#">Wikipedia(<?= $currentQuestion->getWiki()?>)</a>
+                    <a href="https://fr.wikipedia.org/wiki/<?= $currentQuestion->getWiki()?>" > Wikipedia(<?= $currentQuestion->getWiki()?>)</a>
                 </div>
                 <?php endif; ?>
             </div>
         </div>
         <?php endforeach; ?>
-            <button type="submit" class="btn btn-primary btn-block">OK</button>
 
+        <?php if (!$played) :?>
+            <button type="submit" class="btn btn-primary btn-block">OK</button>
+        <?php endif; ?>
         </form>
     </div>
 </div>
