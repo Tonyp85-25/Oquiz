@@ -2,7 +2,7 @@
 vendor/
 
 #config file
-*src/config.conf
+src/config
 
 # NPM packages folder
 node_modules/
@@ -11,7 +11,6 @@ node_modules/
 bower_components/
 
 # Numerous always-ignore extensions
-*.conf
 *.diff
 *.err
 *.orig
