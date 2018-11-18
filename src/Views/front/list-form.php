@@ -56,6 +56,9 @@
 
         <?php if (!$played) :?>
             <button type="submit" class="btn btn-primary btn-block">OK</button>
+        <?php else:?>
+        <a href = "<?= $router->generate('quiz', ['id' => $quiz->getId()])?>" class="btn btn-success btn-block">Rejouer</a>
+
         <?php endif; ?>
         </form>
     </div>

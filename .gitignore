@@ -11,6 +11,7 @@ node_modules/
 bower_components/
 
 # Numerous always-ignore extensions
+*.conf
 *.diff
 *.err
 *.orig
