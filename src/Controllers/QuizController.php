@@ -12,11 +12,13 @@ public function quiz($allParams){
     $id = (int) $allParams['id'];
     $quiz = QuizModel::findById($id);
     $author = QuizModel::findAuthorByQuiz($id);
-    $checked= false;
+    $played= false;
     $questions = QuestionModel::findQuestionsByQuiz($id);
     $style= '';
+    $score=0;
     // On instancie le QuestionModel que l' on envoie en donnée dans notre vue afin de pouvoir utiliser la méthode shuffleProps et findLevel dans quiz.php
     $questionModel = new QuestionModel;
+    $answers =[];
 
 
 
@@ -25,9 +27,17 @@ public function quiz($allParams){
         'questions' => $questions,
         'question' => $questionModel,
         'author' => $author,
-        
+        'played' => $played,
+        'style' => $style,
+        'score' => $score,
+        'answers' => $answers,
         ]);
     }
+
+    /**
+     * Fonction qui s'occupe de traiter le formulaire
+     * 
+     */
 
     public function quizPost($allParams){
         // On sauvegarde la liste des erreurs dans un tableau
@@ -36,22 +46,45 @@ public function quiz($allParams){
         // Je récupère les données
         $answers = array();
         $answers = ($_POST);
-        $checked= true;
+        $played= true;
         $id = (int) $allParams['id'];
+        $style = [];
         
-        foreach ($answers as $answer=>$value) {
-            if ($value === QuestionModel::findQuestionById($answer)->getProp1())
+        foreach ($answers as $questionId=>$value) {
+
+            if (!isset ($_POST[$questionId])) {
+                $style[$questionId] ='';
+            } 
+            
+            if ($value === QuestionModel::findQuestionById($questionId)->getProp1())
             {
                 $score ++;
-                $style = 'style="background-color:green"';
+                $style[$questionId] = 'style="background-color:green"';
             } else {
-                $style = 'style="background-color:yellow"';
+                $style[$questionId] = 'style="background-color:yellow"';
             }
+
         }
-          $this->redirectToRoute('quiz',$params =[
-              'id' => $id,
-              'checked' => $checked,
+
+        $id = (int) $allParams['id'];
+        $quiz = QuizModel::findById($id);
+        $author = QuizModel::findAuthorByQuiz($id);
+        $questions = QuestionModel::findQuestionsByQuiz($id);
+        $questionModel = new QuestionModel;
+
+        
+        
+
+        echo $this->templates->render('front/quiz', [
+              'quiz' => $quiz,
+            'questions' => $questions,
+            'question' => $questionModel,
+            'author' => $author,
+              'played' => $played,
               'style' => $style,
+              'score' => $score,
+              'router' => $this->router, 
+              'answers' => $answers,
 
           ])
             ;

@@ -76,7 +76,7 @@ var app = {
   //     }).fail(function() {
   //     alert('Error in ajax');
   //   });
-  },
+ // },
 
 
 };

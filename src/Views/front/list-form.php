@@ -1,14 +1,14 @@
 
 
  <div class="container">
- <?php if (!$checked): ?>
+ <?php if (!$played): ?>
     <div class="alert alert-primary" role="alert"id="newgame" >
       Nouveau jeu : répondez au maximum de questions avant de valider!
     </div>
     <?php else : ?>
-    <div class="alert alert-success" role="alert"id="result" style="display:none">
-    <p>Votre score : <span id="score"></span> </p>
-    <a href="#">Rejouer</a>
+    <div class="alert alert-success" role="alert"id="result">
+    <p>Votre score : <span id="score"> <?= $score.' / '.count($questions)?> </span> </p>
+    <a href="<?= $router->generate('quiz', ['id' => $quiz->getId()])?>">Rejouer</a>
     </div>
 
     <?php endif;?>
@@ -21,16 +21,22 @@
          <?php foreach ($questions as $currentQuestion) :?>
           <div class="col-sm-4">
               <div class="card question" >
-                  <div class="card-header" <?=$style ?> >
+              <?php if ($played): ?>
+                  <div class="card-header" <?=$style[$currentQuestion->getId()] ?> >
                       <?php $level = $question->findLevelByQuestion($currentQuestion->getId());
                       ?>
+                 <?php else : ?>
+                      <div class="card-header" > 
+                      <?php $level = $question->findLevelByQuestion($currentQuestion->getId());?>
+                 <?php endif;?>
                       <h4><?= $currentQuestion->getQuestion() ?></h4> <span class="float-right badge badge-success"><?= $level->name ?></span>
                   </div>
                   <div class="card-body">
                       <?php  $props = $question->shuffleProps($currentQuestion->getId())?>
                       <?php for ($i=0; $i<4; $i++)  :?>                                 
                       <div class="form-check">
-                          <input class="form-check-input" type="radio" name="<?= $currentQuestion->getId()?>" id="proposition.$i" value="<?= $props[$i]?>" >
+                      <?php $attr = (in_array($props[$i], $answers)) ? 'checked' : '' ;?>
+                          <input class="form-check-input" type="radio" name="<?= $currentQuestion->getId()?>" id="proposition.$i" value="<?= $props[$i]?>" <?=$attr?> >
                           <label class="form-check-label" for="proposition.$i">
                              <?= $props[$i] ?>
                             </label>
@@ -38,10 +44,12 @@
                         <?php endfor; ?> 
 
                 </div>
-                <div class="card-footer text-muted anecdote" style="display:none">
+                <?php if ($played) :?>
+                <div class="card-footer text-muted anecdote" >
                     <p>    <?= $currentQuestion->getAnecdote() ?></p>
                     <a href="#">Wikipedia(<?= $currentQuestion->getWiki()?>)</a>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
         <?php endforeach; ?>

@@ -75,7 +75,8 @@ class UserController extends CoreController{
         // J'envoie (j'affiche) les erreurs au format JSON
         $this->sendJSON([
             'code' => 2,
-            'errorList' => $errorList
+            'errorList' => $errorList,
+            //'url' => $this->redirectToRoute('signin')
         ]);
     }
 

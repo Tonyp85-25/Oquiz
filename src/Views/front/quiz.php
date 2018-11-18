@@ -9,10 +9,12 @@
 </div>
  <?php if ($connectedUser !== false) : ?>
      <?=$this->insert('front/list-form', [
+         'quiz' => $quiz,
          'questions'=> $questions,
          'question' => $question,
-         'checked' => false,
-        'style' => '',
+         'played' => $played,
+        'style' => $style,
+        'score' => $score,
          ])?>
        <?php else : ?>
 
