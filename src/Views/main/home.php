@@ -6,7 +6,7 @@
 <h2>
     Bienvenue sur O'Quiz
 </h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore enim, veritatis quis expedita, nisi odio ea temporibus suscipit, hic deleniti officia ex eius! Debitis numquam enim in consequatur velit recusandae unde doloribus sed vel, odit voluptates, fugiat laborum officia, error incidunt facere ratione neque tenetur quasi? Necessitatibus totam, soluta. Ipsum dolor dolore perspiciatis et eligendi, atque laboriosam, odio amet repellendus.</p>
+<p>Inscrivez-vous et testez vos connaissances sur les différents thèmes abordés</p>
 </div>
 
 <div class="container quiz">

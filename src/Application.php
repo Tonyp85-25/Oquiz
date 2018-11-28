@@ -25,7 +25,7 @@ class Application {
     $this->router->map('POST', '/quiz/[i:id]', ['QuizController', 'quizPost'], 'quiz_post');
     $this->router->map('GET', '/compte/', ['UserController', 'profile'], 'profile');
     $this->router->map('GET', '/signin/', ['UserController', 'signin'], 'signin');
-    $this->router->map('POST', '/signin/', ['UserController', 'signinpost'], 'signin_post');
+    $this->router->map('POST', '/signin/', ['UserController', 'signinPost'], 'signin_post');
     $this->router->map('GET', '/signout/', ['UserController', 'signout'], 'signout');
 
 

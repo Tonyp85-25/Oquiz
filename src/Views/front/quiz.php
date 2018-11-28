@@ -25,12 +25,12 @@
           <div class="col-sm-4">
               <div class="card question">
                   <div class="card-header">
-                      <?php $level = $question->findLevelByQuestion($currentQuestion->getId());
+                      <?php $level = $currentQuestion->findLevelByQuestion($currentQuestion->getId());
                       ?>
                       <h4><?= $currentQuestion->getQuestion() ?></h4> <span class="badge badge-success"><?= $level->name ?></span>
                   </div>
                   <div class="card-body">
-                      <?php  $props = $question->shuffleProps($currentQuestion->getId())?>
+                      <?php  $props = $currentQuestion->shuffleProps($currentQuestion->getId())?>
 
                       <p class="card-text">1. <?= $props[0] ?></p>
                       <p class="card-text">2. <?= $props[1]?></p>

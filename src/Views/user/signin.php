@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<form  class="col-md-6 m-auto " action="" method="post" id="formLogin">
+<form  class="col-md-6 m-auto "  method="post" id="formLogin" novalidate>
   <div class="form-group">
     <label for="exampleInputEmail1">Votre adresse email</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" name="email">

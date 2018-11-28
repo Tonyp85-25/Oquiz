@@ -13,7 +13,7 @@
 
 	<!-- On transforme la variable PHP en variable JS et on la rend disponible partout -->
 	<script>
-    var BASE_PATH = "<?= $basePath ?>";
+    const BASE_PATH = "<?= $basePath ?>";
     </script>
     <!-- Inclusion de jQuery -->
 
@@ -21,9 +21,10 @@
 	<body>
 		  <header>
         <?=$this->insert('partials/nav')?>
+        
     </header>
     <main>
-
+    
 
 
     	<?=$this->section('content')?>
