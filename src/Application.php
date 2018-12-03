@@ -27,6 +27,7 @@ class Application {
     $this->router->map('GET', '/signin/', ['UserController', 'signin'], 'signin');
     $this->router->map('POST', '/signin/', ['UserController', 'signinPost'], 'signin_post');
     $this->router->map('GET', '/signout/', ['UserController', 'signout'], 'signout');
+    $this->router->map('GET|POST', '/signup/', ['UserController', 'signup'], 'signup');
 
 
 

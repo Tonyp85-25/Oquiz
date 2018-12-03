@@ -114,18 +114,23 @@ class UserController extends CoreController{
         // Je distinggue le POST du GET
         if (!empty($_POST)) { // => POST
             // Je récupère les données
-           // $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+            $first_name= isset($_POST['first_name']) ? trim($_POST['first_name']) : '';
+            $last_name= isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
             $password = isset($_POST['password']) ? trim($_POST['password']) : '';
             $confirmPassword = isset($_POST['confirmPassword']) ? trim($_POST['confirmPassword']) : '';
             
             // Traiter les données
-            $username = htmlentities($username); // encode les caractères HTML
-            
+            $first_name = htmlentities($first_name); // encode les caractères HTML
+            $last_name = htmlentities($last_name);
             // Je valide les données
-            // if (empty($username)) {
-            //     $errorList[] = 'Le nom d\'utilisateur doit être renseigné';
-            // }
+            if (empty($first_name)) {
+                $errorList[] = 'Le prénom doit être renseigné';
+            }
+            if (empty($last_name)) {
+                $errorList[] = 'Le nom doit être renseigné';
+            }
+
             if (empty($email)) {
                 $errorList[] = 'L\'adresse email doit être renseignée';
             }
@@ -145,30 +150,37 @@ class UserController extends CoreController{
             
             // Si tout est ok (aucune erreur)
             if (count($errorList) == 0) {
-                // TODO vérifier que username n'existe pas déjà
-                // TODO vérifier que email n'existe pas déjà
                 
-                // J'encode, je hash le mot de passe avant de le stocker en DB
-                $hash = password_hash($password, PASSWORD_DEFAULT);
+                // on vérifie que email n'existe pas déjà
+                if(!UserModel::findByEmail($email)){
+                    // J'encode, je hash le mot de passe avant de le stocker en DB
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
                 
                 // Pour sauvegarder en DB, je dois d'abord créer le Model
-                $userModel = new UserModel();
-                // Puis donner une valeur à chaque propriété (besoin des setters)
-                // $userModel->setUsername($username);
-                $userModel->setEmail($email);
-                $userModel->setPassword($hash);
+                    $userModel = new UserModel();
+
+                    $userModel->setFirstName($first_name);
+                    $userModel->setLastName($last_name);
+                    $userModel->setEmail($email);
+                    $userModel->setPassword($hash);
 
                 // Je peux sauvegarder le model
-                $insertedRows = $userModel->save();
-                if ($insertedRows > 0) {
+                    $insertedRows = $userModel->save();
+                    if ($insertedRows > 0) {
                     // Je peux rediriger car tout est ok
-                    die('ok => redirection');
+                    $this->redirectToRoute('home');
                     // TODO redirection
+                    }
+                    else {
+                        $errorList[] = 'Erreur dans l\'ajout à la DB';
+                    }
+
+                } else {
+                     $errorList[] = 'Erreur ce mail existe déjà';
                 }
-                else {
-                    $errorList[] = 'Erreur dans l\'ajout à la DB';
-                }
-            }
+                
+            } 
+            
         }
          // J'affiche le rendu de ma template
          echo $this->templates->render('user/signup', [

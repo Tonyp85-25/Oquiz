@@ -13,7 +13,12 @@ class UserModel {
 
     const TABLE_NAME = 'users';
 
-    //On créé une fonction qui vérifie si l'email rentré existe dans la BDD
+    /**
+     * On créé une fonction qui vérifie si l'email rentré existe dans la BDD
+     *
+     * @param string $email
+     * @return object
+     */
     public static function findByEmail($email) {
         $sql = '
             SELECT *
@@ -33,6 +38,87 @@ class UserModel {
 
         return $result;
     }
+
+    
+    /**
+    * insert fields in Database 
+    *
+    * @return void
+    */
+    private function insert ()
+    {
+        $sql = '
+        INSERT INTO '.self::TABLE_NAME.'
+        (`first_name`, `last_name`, `email`, `password`)
+        VALUES
+        (:first_name, :last_name, :email, :password)
+        ';
+
+        $pdoStatement = Database::getPDO()->prepare($sql);
+
+        $pdoStatement->bindValue(':first_name', $this->first_name , PDO::PARAM_STR);
+        $pdoStatement->bindValue(':last_name', $this->last_name , PDO::PARAM_STR);
+        $pdoStatement->bindValue(':email', $this->email , PDO::PARAM_STR);
+        $pdoStatement->bindValue(':password', $this->password , PDO::PARAM_STR);
+
+        $affectedRows = $pdoStatement->execute();
+
+          // Je récupère l'id auto-incrémenté
+        // et je l'affecte à la propriété id
+        $this->id = Database::getPDO()->lastInsertId();
+        
+        return $affectedRows;
+    }
+
+   
+    /**
+     * update the object in database
+     *
+     * @return void
+     */
+    private  function update() {
+        $sql = '
+            UPDATE '.self::TABLE_NAME.'
+            SET 
+            `first_name` = :first_name,
+            `last_name` = :last_name,
+            `email` = :email,
+            `password` = :password
+            WHERE id = :id
+            ';
+            // Je prépare
+            $pdoStatement = Database::getPDO()->prepare($sql);
+
+            $pdoStatement->bindValue(':first_name', $this->first_name , PDO::PARAM_STR);
+            $pdoStatement->bindValue(':last_name', $this->last_name , PDO::PARAM_STR);
+            $pdoStatement->bindValue(':email', $this->email , PDO::PARAM_STR);
+            $pdoStatement->bindValue(':password', $this->password , PDO::PARAM_STR);
+            $pdoStatement->bindValue(':id', $this->id , PDO::PARAM_INT);
+
+            $affectedRows = $pdoStatement->execute();
+            return $affectedRows;
+    }
+
+
+    /**
+     * saves data in database, and know when insert or upadte
+     *
+     * @return void
+     */
+    public function save() {
+        // Si on a un id => alors la ligne existe dans la table
+        // => on met à jour
+        if ($this->id > 0) {
+          $retour = $this->update();
+          return $retour;
+        }
+        // Sinon, la ligne n'existe pas dans la table
+        // => on insère dans la table
+        else {
+          return $this->insert();
+        }
+      }
+
 
     /*GETTERS*/
 

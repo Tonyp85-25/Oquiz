@@ -24,7 +24,7 @@
             <a class="nav-link" href="<?= $router->generate('signin') ?>"><i class="fas fa-sign-in-alt"></i>Connexion</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-edit"></i>Inscription</a>
+            <a class="nav-link" href="<?= $router->generate('signup') ?>"><i class="fas fa-edit"></i>Inscription</a>
         </li>
          <?php endif; ?>
     </ul>
