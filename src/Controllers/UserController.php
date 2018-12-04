@@ -6,13 +6,25 @@ use Oquiz\Utils\User;
 
 class UserController extends CoreController{
 
-	public function profile(){
+    
+    
+    /**
+     * shows the user's profile page
+     * @param  $params
+     * @return void
+     */
+    public function profile($params){
 
-		$quizzes =QuizModel::findAll();
+       
+        $id= (int) $params['id'];
+        $user = UserModel::findById($id);
+        
+        $quizzes= QuizModel::findQuizzesByUser($id);
 
 
-         echo $this->templates->render('main/home', [
-             'quizzes'=>$quizzes,
+         echo $this->templates->render('user/profile', [
+             'user'=>$user,
+             'quizzes' =>$quizzes,
              ]) ;
 	}
 
@@ -169,7 +181,7 @@ class UserController extends CoreController{
                     if ($insertedRows > 0) {
                     // Je peux rediriger car tout est ok
                     $this->redirectToRoute('home');
-                    // TODO redirection
+                   
                     }
                     else {
                         $errorList[] = 'Erreur dans l\'ajout à la DB';

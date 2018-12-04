@@ -13,8 +13,8 @@
             <a class="nav-link" href="<?= $router->generate('home') ?>"><i class="fas fa-home"></i>Accueil</a>
         </li>
         <?php if ($connectedUser !== false) : ?>
-        <li class="nav-item">
-            <a class="nav-link" href="<?= $router->generate('profile') ?>"><i class="fas fa-user"></i>Mon compte</a>
+        <li class="nav-item"> 
+            <a class="nav-link" href="<?= $router->generate('profile',['id'=>$connectedUser->getId()]) ?>"><i class="fas fa-user"></i>Mon compte</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<?= $router->generate('signout') ?>"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>

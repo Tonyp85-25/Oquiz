@@ -14,7 +14,7 @@ class UserModel {
     const TABLE_NAME = 'users';
 
     /**
-     * On créé une fonction qui vérifie si l'email rentré existe dans la BDD
+     * checks if email already exists
      *
      * @param string $email
      * @return object
@@ -74,7 +74,7 @@ class UserModel {
     /**
      * update the object in database
      *
-     * @return void
+     * @return object
      */
     private  function update() {
         $sql = '
@@ -101,7 +101,7 @@ class UserModel {
 
 
     /**
-     * saves data in database, and know when insert or upadte
+     * saves data in database, and know when insert or update
      *
      * @return void
      */
@@ -118,6 +118,28 @@ class UserModel {
           return $this->insert();
         }
       }
+
+    /**
+     * return the userModel with the selected id
+     *
+     * @param int $id
+     * @return object
+     */
+      public static function findById($id){
+        $sql ='
+        SELECT * FROM '.self::TABLE_NAME.'
+        WHERE id = :id
+        ';
+        // Je prépare ma requête
+      $pdoStatement = Database::getPDO()->prepare($sql);
+      // Je "bind" les données/token/jeton de ma requête
+      $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
+        // J'exécute ma requête
+      $pdoStatement->execute();
+      // Je récupère LE résultat
+      $result = $pdoStatement->fetchObject(static::class);
+      return $result;
+    }
 
 
     /*GETTERS*/

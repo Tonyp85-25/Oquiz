@@ -79,7 +79,27 @@ class QuizModel {
       // Je récupère LE résultat
       $result = $pdoStatement->fetchObject(static::class);
       return $result;
-	}
+    }
+    
+    /**
+     * Ureturn the quizzes created by one specific user
+     *
+     * @param int $userId
+     * @return 
+     */
+    public static function findQuizzesByUser($userId) {
+        $sql ='
+        SELECT * FROM '.self::TABLE_NAME.'
+        WHERE id_author = :userId
+        ';
+
+        $pdoStatement = Database::getPDO()->prepare($sql);
+        $pdoStatement->bindValue(':userId', $userId, PDO::PARAM_INT); 
+        $pdoStatement->execute();
+        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
+        
+        return $results;
+    }
 
     
 
