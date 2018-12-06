@@ -20,7 +20,7 @@ h2{
   font-size: 2.5rem;
 }
 nav .nav-link {
-  color: #1559a2;
+  color: #1559a2!important;
 }
 
 i {
@@ -72,6 +72,10 @@ footer {
 button[type=submit] {
   width: 100%;
   font-size: 1.5rem;
+}
+
+#result {
+  font-size: 2rem;
 }
 
 
