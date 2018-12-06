@@ -7,7 +7,13 @@
       Bienvenue sur O'Quiz
   </h2>
   <p>Inscrivez-vous et testez vos connaissances sur les différents thèmes abordés.</p>   
-  <p>Il faut être connecté  pour jouer avec les quiz, pour cela il vous faut une adresse mail (aucun mail ne vous sera envoyé) et un mot de passe</p>
+  <p>Il faut être connecté  pour jouer avec les quiz, pour cela il vous faut une adresse mail (aucun mail ne vous sera envoyé) et un mot de passe.</p>
+  <p> Vous pouvez aussi utiliser le compte test.</p>
+  <button type="button" class="btn btn-info" id="see">Voir compte test</button>
+  <div id="identifiers" style="display:none">
+    <p> email : test@quiz.pw</p>
+    <p> mdp: quiztest1</p>
+  </div>
 <?php else: ?>
   <h2>
       Bienvenue sur O'Quiz, <?=$connectedUser->getFirstName() ?> !

@@ -8,6 +8,8 @@ var app = {
 
     // J'intercepte l'event "submit" du formulaire de quiz
     $('#formQuiz').on('submit', app.submitFormQuiz);
+    //on affiche ou non le compte test
+    $('#see').on('click', app.toggleIds);
 
   },
     
@@ -48,6 +50,10 @@ var app = {
      
       
     });
+  },
+
+  toggleIds: function(){
+    $('#identifiers').toggle();
   },
 
   //traitement du formulaire de quiz
