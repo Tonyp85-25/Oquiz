@@ -10,7 +10,7 @@ class UserController extends CoreController{
     
     /**
      * shows the user's profile page
-     * @param  $params
+     * @param  array $params
      * @return void
      */
     public function profile($params){
@@ -21,8 +21,7 @@ class UserController extends CoreController{
         
         $quizzes= QuizModel::findQuizzesByUser($id);
 
-
-         echo $this->templates->render('user/profile', [
+        echo $this->templates->render('user/profile', [
              'user'=>$user,
              'quizzes' =>$quizzes,
              ]) ;

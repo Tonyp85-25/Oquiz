@@ -22,7 +22,7 @@
           <div class="col-sm-4">
               <div class="card question" >
               <?php if ($played): ?>
-                  <div class="card-header" <?=$style[$currentQuestion->getId()] ?> >
+                  <div class="card-header" <?php $style[$currentQuestion->getId()]?   $style[$currentQuestion->getId()]: '' ;?> >
                       <?php $level = $currentQuestion->findLevelByQuestion($currentQuestion->getId());
                       ?>
                  <?php else : ?>
@@ -44,7 +44,7 @@
                         <?php endfor; ?> 
 
                 </div>
-                <?php if ($played && $style[$currentQuestion->getId()] === 'style="background-color:green"' ) :?>
+                <?php if ($played && $style[$currentQuestion->getId()] === 'style="background-color:#d4edda"' ) :?>
                 <div class="card-footer text-muted anecdote" >
                     <p>    <?= $currentQuestion->getAnecdote() ?></p>
                     <a href="https://fr.wikipedia.org/wiki/<?= $currentQuestion->getWiki()?>" > Wikipedia(<?= $currentQuestion->getWiki()?>)</a>

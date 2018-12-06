@@ -58,9 +58,9 @@ public function quiz($allParams){
             if ($value === QuestionModel::findQuestionById($questionId)->getProp1())
             {
                 $score ++;
-                $style[$questionId] = 'style="background-color:green"';
+                $style[$questionId] = 'style="background-color:#d4edda"';
             } else {
-                $style[$questionId] = 'style="background-color:yellow"';
+                $style[$questionId] = 'style="background-color:#f03737"';
             }
 
         }

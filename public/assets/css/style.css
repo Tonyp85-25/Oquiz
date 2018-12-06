@@ -6,15 +6,20 @@ body {
 header {
   display: flex;
     justify-content: space-between;
-    margin-left: 8.5em;
+    
     padding-top: 1em;
 }
 h1 {
 color: #1559a2;
 font-weight: 600;
 font-size: 4em;
+
 }
-.nav a {
+
+h2{
+  font-size: 2.5rem;
+}
+nav .nav-link {
   color: #1559a2;
 }
 
@@ -23,15 +28,22 @@ i {
 }
 
 .bienvenue{
-      margin-top: 4em;
-      padding: 0 8.5em;
+      margin-top: 4rem;     
       text-align: center;
+      font-size: 2rem;
+}
+
+form{
+  font-size: 1.5rem;
+}
+input{
+  font-size: 1.5rem;
 }
 
 .quiz {
-  margin-top: 4em;
+  margin-top: 4rem;
 }
-.quiz .home h4 {
+h4 {
   font-weight: bold;
 }
 
@@ -44,9 +56,9 @@ i {
   font-weight: bold;
   color: #1559a2;
 }
+
 #formtop {
-  
-    margin-bottom: 3em;
+    margin-bottom: 3rem;
 }
 
 #newgame {
@@ -59,4 +71,7 @@ footer {
 }
 button[type=submit] {
   width: 100%;
+  font-size: 1.5rem;
 }
+
+

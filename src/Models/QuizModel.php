@@ -82,7 +82,7 @@ class QuizModel {
     }
     
     /**
-     * Ureturn the quizzes created by one specific user
+     * return the quizzes created by one specific user
      *
      * @param int $userId
      * @return 
