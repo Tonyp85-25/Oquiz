@@ -22,8 +22,8 @@ abstract class CoreController{
         // Je définis des données utiles pour toutes les templates
         $this->templates->addData([
             'title' => 'Oquiz', // => $title
-            'basePath' => BASE_PATH,
-            // 'basePath' => $_SERVER['BASE_URI'] ?:'', // => $basePath
+            
+            'basePath' => $_SERVER['BASE_URI'] ?:'', // => $basePath
             'router' => $this->router, // => $router
             'connectedUser' => User::getUser()  // => $connectedUser
         ]);
