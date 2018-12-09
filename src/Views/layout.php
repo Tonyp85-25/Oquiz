@@ -3,13 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<title><?=$this->e($title)?></title>
-		<link rel="stylesheet" href="<?= $basePath ?>assets/css/reset.css">
+		<link rel="stylesheet" href="<?= $basePath ?>/assets/css/reset.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/brands.css">
     <link href="https://fonts.googleapis.com/css?family=Sunflower:300,700" rel="stylesheet">
-    <link rel="stylesheet" href="<?= $basePath ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?= $basePath ?>/assets/css/style.css">
 
 	<!-- On transforme la variable PHP en variable JS et on la rend disponible partout -->
 	<script>
