@@ -76,7 +76,7 @@ class UserController extends CoreController{
                      // On affiche un JSON disant que tout est ok
                     $this->sendJSON([
                         'code' => 1,
-                        'url' => $_SERVER['BASE_URI']
+                        'url' => $this->router->generate('home')
                     ]);
                    
                 }
