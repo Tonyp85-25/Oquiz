@@ -11,7 +11,7 @@ class Application {
     // On ignore une partie de l'URL
     // On récupère donc la partie de l'URL qui
     // est fixe grâce à $_SERVER['BASE_URI']
-    $basePath = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : $_SERVER['DOCUMENT_ROOT'];
+    $basePath = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : $_SERVER['SERVER_NAME'];
     // On renseigne la partie de l'URL fixe
     $this->router->setBasePath($basePath);
     // On lance le mapping
