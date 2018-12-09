@@ -16,7 +16,7 @@ public function quiz($allParams){
     $questions = QuestionModel::findQuestionsByQuiz($id);
     $style= '';
     $score=0;
-    
+   
     
     $answers =[];
 
@@ -40,6 +40,7 @@ public function quiz($allParams){
 
     public function quizPost($allParams){
         // On sauvegarde la liste des erreurs dans un tableau
+        dump($_POST);
         $errorList = array();
         $score= 0;
         // Je récupère les données
@@ -63,7 +64,7 @@ public function quiz($allParams){
         $answers = $_POST;
         //on ajoute $diffs à la fin d'answers pour que toutes les id soient présentes (pour éviter d'avoir une erreur "undefined offset")
         $answers = $answers + $diffs;
-        
+        dump($answers);
         $style = [];
         
         foreach ($answers as $questionId=>$value) {

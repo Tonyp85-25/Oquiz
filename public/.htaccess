@@ -4,7 +4,7 @@ AddDefaultCharset UTF-8
     RewriteEngine On
 
     # dynamically setup base URI
-    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteCond %{REQUEST_URI}::$1 ^(\/.+)\/(.*)::\2$
     RewriteRule ^(.*) - [E=BASE_URI:%1]
 
     RewriteCond %{REQUEST_FILENAME} !-d

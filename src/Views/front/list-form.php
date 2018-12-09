@@ -35,7 +35,7 @@
                       <?php  $props = $currentQuestion->shuffleProps($currentQuestion->getId())?>
                       <?php for ($i=0; $i<4; $i++)  :?>                                 
                       <div class="form-check">
-                      <?php $attr = (in_array($props[$i], $answers)) ? 'checked' : '' ;?>
+                      <?php $attr = ($answers[$currentQuestion->getId()] !== "" && in_array($props[$i], $answers)) ? 'checked' : '' ;?>
                           <input class="form-check-input" type="radio" name="<?= $currentQuestion->getId()?>" id="proposition.$i" value="<?= $props[$i]?>" <?=$attr?> >
                           <label class="form-check-label" for="proposition.$i">
                              <?= $props[$i] ?>
