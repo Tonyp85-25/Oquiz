@@ -13,7 +13,7 @@ class Application {
     // est fixe grâce à $_SERVER['BASE_URI']
     $basePath = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : '';
     // On renseigne la partie de l'URL fixe
-    $this->router->setBasePath($basePath);
+    //$this->router->setBasePath($basePath);
     // On lance le mapping
     $this->mapping();
   }

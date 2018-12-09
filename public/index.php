@@ -9,6 +9,7 @@
 define('ABS_BASE_PATH', __DIR__.'/../');
 // On inclue l'autoload de Composer pour inclure
 // automatiquement toutes les classes du projet
+
 require(__DIR__ . '/../vendor/autoload.php');
 // On démarre les sessions
 session_start();
