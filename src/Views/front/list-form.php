@@ -2,15 +2,17 @@
 
  <div class="container">
  
-    <div class="alert alert-primary" role="alert"id="newgame" >
+    <div class="alert alert-primary newgame" role="alert" >
       Nouveau jeu : répondez au maximum de questions avant de valider!
     </div>
     
-    <div class="alert alert-success" role="alert"id="result" style = display:none>
+    <div class="alert alert-success result" role="alert" style = display:none>
     <p>Votre score : <span id="score">  </span> </p>
     <a href="<?= $router->generate('quiz', ['id' => $quiz->getId()])?>">Rejouer</a>
     </div>
-
+    <script>
+            var quizId = <?= $quiz->getId()?>;
+    </script>
     
 
      <div class="row">
@@ -41,22 +43,21 @@
                         <?php endfor; ?> 
 
                 </div>
-                <?php if ($played && $style[$currentQuestion->getId()] === 'style="background-color:#d4edda"' ) :?>
-                <div class="card-footer text-muted anecdote" >
+               
+                <div class="card-footer text-muted anecdote" style = "display:none" id= "anecdote_<?= $currentQuestion->getId()?>">
                     <p>    <?= $currentQuestion->getAnecdote() ?></p>
                     <a href="https://fr.wikipedia.org/wiki/<?= $currentQuestion->getWiki()?>" target="_blank" > Wikipedia(<?= $currentQuestion->getWiki()?>)</a>
                 </div>
-                <?php endif; ?>
+                
             </div>
         </div>
         <?php endforeach; ?>
 
-        <?php if (!$played) :?>
-            <button type="submit" class="btn btn-primary btn-block">OK</button>
-        <?php else:?>
-        <a href = "<?= $router->generate('quiz', ['id' => $quiz->getId()])?>" class="btn btn-success btn-block">Rejouer</a>
+       
+            <button type="submit" class="btn btn-primary btn-block newgame">OK</button>
+        
+        <a href = "<?= $router->generate('quiz', ['id' => $quiz->getId()])?>" class="btn btn-success btn-block result" style= "display:none">Rejouer</a>
 
-        <?php endif; ?>
         </form>
     </div>
 </div>

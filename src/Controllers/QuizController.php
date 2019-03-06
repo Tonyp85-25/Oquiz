@@ -88,22 +88,23 @@ public function quiz($allParams){
             'code' => 2,
             'results' => $results,
             'score' => $score,
+            'total' => count($results),
         ]);
         // $quiz = QuizModel::findById($id);
         // $author = QuizModel::findAuthorByQuiz($id);
 
-        echo $this->templates->render('front/quiz', [
-            //   'quiz' => $quiz,
-            // 'questions' => $questions,
-            // 'author' => $author,
-            //   'played' => $played,
-              'style' => $style,
-              'score' => $score,
-              'router' => $this->router, 
-              'answers' => $answers,
+        // echo $this->templates->render('front/quiz', [
+        //     //   'quiz' => $quiz,
+        //     // 'questions' => $questions,
+        //     // 'author' => $author,
+        //     //   'played' => $played,
+        //       'style' => $style,
+        //       'score' => $score,
+        //       'router' => $this->router, 
+        //       'answers' => $answers,
 
-          ])
-            ;
+           
+           
     }
 
 
