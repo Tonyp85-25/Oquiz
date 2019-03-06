@@ -65,32 +65,38 @@ public function quiz($allParams){
         //on ajoute $diffs à la fin d'answers pour que toutes les id soient présentes (pour éviter d'avoir une erreur "undefined offset")
         $answers = $answers + $diffs;
         
-        $style = [];
+        // $style = [];
         
+        $results = [];
         foreach ($answers as $questionId=>$value) {
 
             // Pour savoir si une réponse est juste , il faut la comparer à la propostion 1 (prop1)de chaque question
             if ($value === QuestionModel::findQuestionById($questionId)->getProp1())
             {
                 $score ++;
-                $style[$questionId] = 'style="background-color:#d4edda"';
+                // $style[$questionId] = 'style="background-color:#d4edda"';
+                $results[$questionId] = 'true';
             } elseif ('' === $value) {
-                 $style[$questionId] = '';
+                $results[$questionId] = 'none';
             }else {
-                $style[$questionId] = 'style="background-color:#f03737"';
+                $results[$questionId] = 'false';
             }
 
         }
 
-        
-        $quiz = QuizModel::findById($id);
-        $author = QuizModel::findAuthorByQuiz($id);
+        $this->sendJSON([
+            'code' => 2,
+            'results' => $results,
+            'score' => $score,
+        ]);
+        // $quiz = QuizModel::findById($id);
+        // $author = QuizModel::findAuthorByQuiz($id);
 
         echo $this->templates->render('front/quiz', [
-              'quiz' => $quiz,
-            'questions' => $questions,
-            'author' => $author,
-              'played' => $played,
+            //   'quiz' => $quiz,
+            // 'questions' => $questions,
+            // 'author' => $author,
+            //   'played' => $played,
               'style' => $style,
               'score' => $score,
               'router' => $this->router, 
