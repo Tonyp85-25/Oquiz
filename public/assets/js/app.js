@@ -70,28 +70,28 @@ var app = {
       data: formData // Les données envoyés avec l'appel Ajax
 
     }).done(function(response) {
-      console.log(response);
+      // console.log(response);
       // Si tout est ok
       if (response.code == 2) {
-        alert('Connexion réussie');
+        // alert('Connexion réussie');
         $('.newgame').hide();
         $('.result').show();
         $('#score').text('');
         $('#score').text(response.score + ' / '+ response.total );
         
-        //on affiche la bonne couleur selon la réponse
+        //on affiche la bonne couleur selon la réponse et on affiche l'anedote si l'utilisateur a répondu à la question
         for (prop in response.results) {
-          console.log(response.results[prop]);
-         if (prop === 'true') {
-           $('#header_response.results.prop').css('background-color', '#d4edda');
+          // console.log(response.results[prop]);
+          
+         if (response.results[prop] === 'true') {
+           $('#header_'+prop).css('background-color', '#d4edda');
+           $('#anecdote_'+prop).show();
          }
-          
-          
-        }
-
-       
-
-        
+         if (response.results[prop] === 'false') {
+          $('#header_'+prop).css('background-color', '#e48f6f');
+          $('#anecdote_'+prop).show();
+        }  
+        } 
        
       }
     }).fail(function() {
