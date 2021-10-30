@@ -46,7 +46,7 @@
                
                 <div class="card-footer text-muted anecdote" style = "display:none" id= "anecdote_<?= $currentQuestion->getId()?>">
                     <p>    <?= $currentQuestion->getAnecdote() ?></p>
-                    <a href="https://fr.wikipedia.org/wiki/<?= $currentQuestion->getWiki()?>" target="_blank" > Wikipedia(<?= $currentQuestion->getWiki()?>)</a>
+                    <a href="https://fr.wikipedia.org/wiki/<?= $currentQuestion->getWiki()?>" target="_blank" rel="noopener noreferrer" > Wikipedia(<?= $currentQuestion->getWiki()?>)</a>
                 </div>
                 
             </div>

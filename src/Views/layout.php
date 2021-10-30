@@ -26,7 +26,6 @@
     <main>
     
 
-
     	<?=$this->section('content')?>
     </main>
 
@@ -41,7 +40,7 @@
 
 
     <footer>
-     <p>Copyright &copy; Oclock 2018</p> <a href="http://anthonyperspace.pw/contact" class="badge badge-primary">Contact</a>
+     <!-- <p>Copyright &copy; Oclock 2018</p> <a href="http://anthonyperspace.pw/contact" class="badge badge-primary">Contact</a> -->
     </footer>
 
 

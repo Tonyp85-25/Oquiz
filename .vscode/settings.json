@@ -1,2 +1,13 @@
-{
+{   "editor.formatOnSave": true,
+
+    "[php]": {
+        "cSpell.fixSpellingWithRenameProvider": false,
+        "editor.defaultFormatter": "junstyle.php-cs-fixer"
+
+    },
+    "php-cs-fixer.executablePath": "/var/www/html/oquiz/tools/php-cs-fixer/vendor/bin/php-cs-fixer",
+    "php-cs-fixer.onsave": true,
+    "php-cs-fixer.formatHtml": true,
+    "php-cs-fixer.rules": "@PSR2",
+    "php-cs-fixer.config": ".php-cs-fixer.php;.php-cs-fixer.dist.php;.php_cs;.php_cs.dist",
 }

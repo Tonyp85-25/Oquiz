@@ -1,5 +1,6 @@
 # Bundler
 vendor/
+.vscode
 
 #config file
 
