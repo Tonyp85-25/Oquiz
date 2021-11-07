@@ -34,7 +34,7 @@
       <h4> <?=$currentQuiz->getDescription()?>
       </h4>
       <?php $author = $currentQuiz->getAuthor();?>
-      <p>by <?=$author->first_name ?> <?=$author->last_name ?>
+      <p>by <?=$author->getFirstName() ?> <?=$author->getLastName()?>
       </p>
     </div>
 
