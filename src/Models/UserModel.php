@@ -1,10 +1,11 @@
 <?php
 namespace Oquiz\Models;
+
 use Oquiz\Database;
 use PDO;
 
-class UserModel {
-
+class UserModel
+{
     protected $id;
     protected $first_name;
     protected $last_name;
@@ -19,7 +20,8 @@ class UserModel {
      * @param string $email
      * @return object
      */
-    public static function findByEmail($email) {
+    public static function findByEmail($email)
+    {
         $sql = '
             SELECT *
             FROM '.self::TABLE_NAME.'
@@ -41,11 +43,11 @@ class UserModel {
 
     
     /**
-    * insert fields in Database 
+    * insert fields in Database
     *
     * @return void
     */
-    private function insert ()
+    private function insert()
     {
         $sql = '
         INSERT INTO '.self::TABLE_NAME.'
@@ -56,14 +58,14 @@ class UserModel {
 
         $pdoStatement = Database::getPDO()->prepare($sql);
 
-        $pdoStatement->bindValue(':first_name', $this->first_name , PDO::PARAM_STR);
-        $pdoStatement->bindValue(':last_name', $this->last_name , PDO::PARAM_STR);
-        $pdoStatement->bindValue(':email', $this->email , PDO::PARAM_STR);
-        $pdoStatement->bindValue(':password', $this->password , PDO::PARAM_STR);
+        $pdoStatement->bindValue(':first_name', $this->first_name, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':last_name', $this->last_name, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':password', $this->password, PDO::PARAM_STR);
 
         $affectedRows = $pdoStatement->execute();
 
-          // Je récupère l'id auto-incrémenté
+        // Je récupère l'id auto-incrémenté
         // et je l'affecte à la propriété id
         $this->id = Database::getPDO()->lastInsertId();
         
@@ -76,7 +78,8 @@ class UserModel {
      *
      * @return object
      */
-    private  function update() {
+    private function update()
+    {
         $sql = '
             UPDATE '.self::TABLE_NAME.'
             SET 
@@ -86,17 +89,17 @@ class UserModel {
             `password` = :password
             WHERE id = :id
             ';
-            // Je prépare
-            $pdoStatement = Database::getPDO()->prepare($sql);
+        // Je prépare
+        $pdoStatement = Database::getPDO()->prepare($sql);
 
-            $pdoStatement->bindValue(':first_name', $this->first_name , PDO::PARAM_STR);
-            $pdoStatement->bindValue(':last_name', $this->last_name , PDO::PARAM_STR);
-            $pdoStatement->bindValue(':email', $this->email , PDO::PARAM_STR);
-            $pdoStatement->bindValue(':password', $this->password , PDO::PARAM_STR);
-            $pdoStatement->bindValue(':id', $this->id , PDO::PARAM_INT);
+        $pdoStatement->bindValue(':first_name', $this->first_name, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':last_name', $this->last_name, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':password', $this->password, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':id', $this->id, PDO::PARAM_INT);
 
-            $affectedRows = $pdoStatement->execute();
-            return $affectedRows;
+        $affectedRows = $pdoStatement->execute();
+        return $affectedRows;
     }
 
 
@@ -105,19 +108,20 @@ class UserModel {
      *
      * @return void
      */
-    public function save() {
+    public function save()
+    {
         // Si on a un id => alors la ligne existe dans la table
         // => on met à jour
         if ($this->id > 0) {
-          $retour = $this->update();
-          return $retour;
+            $retour = $this->update();
+            return $retour;
         }
         // Sinon, la ligne n'existe pas dans la table
         // => on insère dans la table
         else {
-          return $this->insert();
+            return $this->insert();
         }
-      }
+    }
 
     /**
      * return the userModel with the selected id
@@ -125,62 +129,78 @@ class UserModel {
      * @param int $id
      * @return object
      */
-      public static function findById($id){
+    public static function findById($id)
+    {
         $sql ='
         SELECT * FROM '.self::TABLE_NAME.'
         WHERE id = :id
         ';
         // Je prépare ma requête
-      $pdoStatement = Database::getPDO()->prepare($sql);
-      // Je "bind" les données/token/jeton de ma requête
-      $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdoStatement = Database::getPDO()->prepare($sql);
+        // Je "bind" les données/token/jeton de ma requête
+        $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
         // J'exécute ma requête
-      $pdoStatement->execute();
-      // Je récupère LE résultat
-      $result = $pdoStatement->fetchObject(static::class);
-      return $result;
+        $pdoStatement->execute();
+        // Je récupère LE résultat
+        $result = $pdoStatement->fetchObject(static::class);
+        return $result;
     }
 
 
     /*GETTERS*/
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getFirstName(){
+    public function getFirstName()
+    {
         return $this->first_name;
     }
 
-    public function getLastName(){
+    public function getLastName()
+    {
         return $this->last_name;
     }
-    public function getEmail(){
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function getPassword(){
+    public function getPassword()
+    {
         return $this->password;
     }
 
     /*SETTERS*/
 
-       public function setFirstName($firstName) {
+    public function setId(int $id)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
+        }
+    }
+    public function setFirstName(string $firstName)
+    {
         if (!empty($firstName)) {
             $this->first_name = $firstName;
         }
     }
-     public function setLastName($lastName) {
-      if (!empty($lastName)) {
-          $this->last_name = $lastName;
-      }
-  }
-      public function setEmail($email) {
+    public function setLastName(string $lastName)
+    {
+        if (!empty($lastName)) {
+            $this->last_name = $lastName;
+        }
+    }
+    public function setEmail(string $email)
+    {
         if (!empty($email)) {
             $this->email = $email;
         }
     }
-       public function setPassword($password) {
+    public function setPassword(string $password)
+    {
         if (!empty($password)) {
             $this->password = $password;
         }
