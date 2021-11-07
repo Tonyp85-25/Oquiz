@@ -3,7 +3,8 @@ namespace Oquiz\Controllers;
 
 use Oquiz\Utils\User;
 
-abstract class CoreController{
+abstract class CoreController
+{
 
   // Je stocke le moteur de template dans une propriété de la classe pour que ce soit accessible à toutes ses méthodes
     protected $templates;
