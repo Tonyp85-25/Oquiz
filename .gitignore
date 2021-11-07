@@ -1,6 +1,9 @@
 # Bundler
 vendor/
+
 .vscode
+odocs/
+mysql/
 
 #config file
 
