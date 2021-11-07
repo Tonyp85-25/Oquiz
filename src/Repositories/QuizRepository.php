@@ -11,9 +11,13 @@ class QuizRepository
 {
     const TABLE_NAME = 'quizzes';
     //On crée la fonction qui doit afficher tous les quiz.
-    public static function findAll($attributes=['*'], $withAuthor =false)
+    public function findAll($attributes=['quizzes.id','title','description'], $withAuthor =false)
     {
         $fields= $attributes[0];
+        $badKey =array_search('password', $attributes);
+        if ($badKey) {
+            array_splice($attributes, $badKey, 1);
+        }
         if (count($attributes)>1) {
             $fields = join(', ', $attributes);
         }
@@ -24,21 +28,19 @@ class QuizRepository
  
          ';
         if ($withAuthor) {
-            $sql.= 'INNER JOIN users ON users.id = quizzes.id_author ';
+            $sql= 'SELECT '.$fields.', first_name, last_name, users.id AS author_id FROM '.self::TABLE_NAME.' INNER JOIN users ON users.id = quizzes.id_author ';
         }
          
         $pdo = Database::getPDO();
       
-        $pdoStatement = Database::getPDO()->query($sql);
+        $pdoStatement = $pdo->query($sql);
          
-        $pdoStatement->execute();
-         
-        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, QuizModel::class);
+        $results = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
         // On retourne les résultats
         return $results;
     }
  
-    public static function findById($id)
+    public function findById($id)
     {
         $sql ='
          SELECT * FROM '.self::TABLE_NAME.'
@@ -106,13 +108,5 @@ class QuizRepository
         // Je récupère LE résultat
         $result = $pdoStatement->fetchObject(static::class);
         return $result;
-    }
-
-    private static function formatResultsWithAuthor(...$fields)
-    {
-        $quiz =new QuizModel();
-        foreach ($fields as $field) {
-            # code...
-        }
     }
 }
