@@ -8,33 +8,27 @@ use PDO;
 class QuizModel
 {
     private $id;
+
     /**
     *  @var string
-
     */
     private $title;
+
     /**
     *  @var string
-
     */
     private $description;
+
     /**
     *  @var UserModel
     */
     private $author;
 
     /**
-     * Undocumented variable
      *
      * @var QuestionModel[]
      */
     private $questions;
-
-   
-
-   
-
-    
 
     /* GETTERS*/
 

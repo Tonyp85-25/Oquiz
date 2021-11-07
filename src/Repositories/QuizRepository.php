@@ -57,7 +57,7 @@ class QuizRepository
         return $result;
     }
  
-    public static function findAuthorByQuiz($id)
+    public function findAuthorByQuiz($id)
     {
         $sql ='
              SELECT `first_name`,`last_name` FROM `users` RIGHT JOIN quizzes On users.id = '.self::TABLE_NAME.'.id_author WHERE '.self::TABLE_NAME.'.id = :id
@@ -79,7 +79,7 @@ class QuizRepository
      * @param int $userId
      * @return
      */
-    public static function findQuizzesByUser($userId)
+    public function findQuizzesByUser($userId)
     {
         $sql ='
          SELECT * FROM '.self::TABLE_NAME.'
@@ -94,10 +94,11 @@ class QuizRepository
         return $results;
     }
  
-    private function findQuestionsByQuizz($id)
+    public function findFullQuizz($id)
     {
         $sql ='
-         SELECT `*` FROM `questions` INNER JOIN quizzes ON questions.quizz_id = '.self::TABLE_NAME.'.id WHERE '.self::TABLE_NAME.'.id = :id
+         SELECT * FROM (SELECT * FROM `questions` INNER JOIN quizzes ON questions.id_quiz = '.self::TABLE_NAME.'.id 
+         WHERE '.self::TABLE_NAME.'.id = :id) as qs INNER JOIN levels ON qs.id_level = level.id
      ';
         // Je prépare ma requête
         $pdoStatement = Database::getPDO()->prepare($sql);
@@ -106,7 +107,7 @@ class QuizRepository
         // J'exécute ma requête
         $pdoStatement->execute();
         // Je récupère LE résultat
-        $result = $pdoStatement->fetchObject(static::class);
+        $result = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 }

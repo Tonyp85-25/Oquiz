@@ -2,6 +2,7 @@
 namespace Oquiz;
 
 use \AltoRouter;
+use Oquiz\Repositories\QuizRepository;
 
 class Application
 {
@@ -9,15 +10,14 @@ class Application
     private $container;
     public function __construct()
     {
-        // Création du routeur
         $this->router = new AltoRouter();
-        // On ignore une partie de l'URL
-        // On récupère donc la partie de l'URL qui
-        // est fixe grâce à $_SERVER['BASE_URI']
+        $this->container =new Container();
+    
+        
         $basePath = isset($_SERVER['BASE_URI']) ? $_SERVER['BASE_URI'] : '';
-        // On renseigne la partie de l'URL fixe
+        
         $this->router->setBasePath($basePath);
-        // On lance le mapping
+      
         $this->mapping();
     }
     private function mapping()
@@ -25,7 +25,7 @@ class Application
         // On mappe toutes nos URL
         // La page d'accueil
         $this->router->map('GET', '/', ['MainController', 'home',['QuizRepository']], 'home');
-        $this->router->map('GET', '/quiz/[i:id]', ['QuizController', 'quiz'], 'quiz');
+        $this->router->map('GET', '/quiz/[i:id]', ['QuizController', 'quiz',['QuizRepository']], 'quiz');
         $this->router->map('POST', '/quiz/[i:id]', ['QuizController', 'quizPost'], 'quiz_post');
         $this->router->map('GET', '/compte/[i:id]', ['UserController', 'profile'], 'profile');
         $this->router->map('GET', '/signin/', ['UserController', 'signin'], 'signin');
@@ -36,29 +36,27 @@ class Application
 
     public function run()
     {
-        // Je récupère les données de Altorouter
+        // starts service container
+        $this->bootContainer();
         $match = $this->router->match();
-        dump($match);
-        // print_r($match);
-        if (!$match) {
-            // On a pas trouvé la route, on indique le nouveau chemin
-            // $controller = new \Oquiz\Controllers\MainController();
-            // $controller->error404();
+        if (!$match) { // if no routes
+            
             $controllerName = "\Oquiz\Controllers\MainController";
             $methodName = 'error404';
         } else {
-            // Je regarde quel controller et quelle
-            // méthode je dois exécuter
-            // On pense à ajouter le namespace devant
-            // le nom de la classe et à échapper le
-            // dernier "\" pour ne pas perturber notre code
             $controllerName = "\Oquiz\Controllers\\" . $match['target'][0];
             $methodName = $match['target'][1];
         }
 
-        // J'exécute la bonne et méthode
-        // $controller = new Oquiz\Controllers\MainController();
-        $controller = new $controllerName($this->router);
+        if ($match['target'][2]) { //if service injection needed
+            $requiredServices = $match['target'][2];
+            $injectedServices= $this->container->loadServices($requiredServices);
+            dump($injectedServices);
+            // dynamic instanciation of controller, with services
+            $controller = new $controllerName($this->router, ...$injectedServices);
+        } else {
+            $controller = new $controllerName($this->router);
+        }
         // On en profite pour transmettre les paramètres
         // contenus dans notre URL (si il y en a)
         $controller->$methodName($match['params']);
@@ -74,5 +72,12 @@ class Application
             return $this->config[$key];
         }
         return false;
+    }
+
+    private function bootContainer()
+    {
+        $this->container->addService('QuizRepository', function () {
+            return new QuizRepository();
+        });
     }
 }

@@ -20,17 +20,14 @@ class QuizController extends CoreController
 
 //on récupère l'id de $allParams qu'on transforme en entier
         $id = (int) $allParams['id'];
-        $quiz = $this->entityManager->findById($id);
-        dump($quiz);
-        $author = QuizModel::findAuthorByQuiz($id);
-        $played= false;
-        $questions = QuestionModel::findQuestionsByQuiz($id);
+        $fullQuizz = $this->entityManager->findFullQuizz($id);
+        dump($fullQuizz);
         $style= '';
         $score=0;
 
 
         $answers =[];
-
+        exit();
 
         echo $this->templates->render('front/quiz', [
         'quiz' => $quiz,
