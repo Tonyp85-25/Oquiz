@@ -38,19 +38,19 @@ class QuizModel
 
     /* GETTERS*/
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
-    public function getTitle()
+    public function getTitle():string
     {
         return $this->title;
     }
-    public function getDescription()
+    public function getDescription():string
     {
         return $this->description;
     }
-    public function getAuthor()
+    public function getAuthor():UserModel
     {
         return $this->author;
     }
@@ -59,22 +59,28 @@ class QuizModel
         return $this->questions;
     }
     /*SETTERS*/
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         if (!empty($title)) {
             $this->title = $title;
         }
     }
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         if (!empty($description)) {
             $this->description= $description;
         }
     }
-    public function setAuthor($author)
+    public function setAuthor(UserModel $author)
     {
         if (!empty($author)) {
             $this->author = $author;
+        }
+    }
+    public function setId(int $id)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
         }
     }
 }
