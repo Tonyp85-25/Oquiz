@@ -1,18 +1,27 @@
 <?php
 namespace Oquiz\Controllers;
 
+use AltoRouter;
 use Oquiz\Models\QuizModel;
 use Oquiz\Models\QuestionModel;
+use Oquiz\Repositories\QuizRepository;
 use Oquiz\Utils\Quizz;
 
 class QuizController extends CoreController
 {
+    public function __construct(AltoRouter $router, QuizRepository $quizzRep)
+    {
+        parent::__construct($router);
+        $this->entityManager = $quizzRep;
+    }
+
     public function quiz($allParams)
     {
 
 //on récupère l'id de $allParams qu'on transforme en entier
         $id = (int) $allParams['id'];
-        $quiz = QuizModel::findById($id);
+        $quiz = $this->entityManager->findById($id);
+        dump($quiz);
         $author = QuizModel::findAuthorByQuiz($id);
         $played= false;
         $questions = QuestionModel::findQuestionsByQuiz($id);

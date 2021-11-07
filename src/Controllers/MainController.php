@@ -2,14 +2,20 @@
 namespace Oquiz\Controllers;
 
 use Oquiz\Repositories\QuizRepository;
+use Oquiz\Utils\DataFormatter;
 
 class MainController extends CoreController
 {
     public function home()
     {
-        $quizzes =QuizRepository::findAll(['*'], true);
-        dump($quizzes);
-        exit;
+        $entityManager = new QuizRepository();
+        $rawQuizzes =$entityManager->findAll(['quizzes.id','title','description'], true);
+        $quizzes =[];
+        $formatter =new DataFormatter();
+        foreach ($rawQuizzes as $rawQuizz) {
+            $quizz= $formatter->formatQuizzWithAuthor($rawQuizz);
+            array_push($quizzes, $quizz);
+        }
         
 
 
