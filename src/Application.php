@@ -3,6 +3,7 @@ namespace Oquiz;
 
 use \AltoRouter;
 use Oquiz\Repositories\QuizRepository;
+use Oquiz\Utils\DataFormatter;
 
 class Application
 {
@@ -25,7 +26,7 @@ class Application
         // On mappe toutes nos URL
         // La page d'accueil
         $this->router->map('GET', '/', ['MainController', 'home',['QuizRepository']], 'home');
-        $this->router->map('GET', '/quiz/[i:id]', ['QuizController', 'quiz',['QuizRepository']], 'quiz');
+        $this->router->map('GET', '/quiz/[i:id]', ['QuizController', 'quiz',['QuizRepository','DataFormatter']], 'quiz');
         $this->router->map('POST', '/quiz/[i:id]', ['QuizController', 'quizPost'], 'quiz_post');
         $this->router->map('GET', '/compte/[i:id]', ['UserController', 'profile'], 'profile');
         $this->router->map('GET', '/signin/', ['UserController', 'signin'], 'signin');
@@ -78,6 +79,9 @@ class Application
     {
         $this->container->addService('QuizRepository', function () {
             return new QuizRepository();
+        });
+        $this->container->addService('DataFormatter', function () {
+            return new DataFormatter();
         });
     }
 }

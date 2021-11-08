@@ -97,8 +97,9 @@ class QuizRepository
     public function findFullQuizz($id)
     {
         $sql ='
-         SELECT * FROM (SELECT * FROM `questions` INNER JOIN quizzes ON questions.id_quiz = '.self::TABLE_NAME.'.id 
-         WHERE '.self::TABLE_NAME.'.id = :id) as qs INNER JOIN levels ON qs.id_level = level.id
+        SELECT question, name AS level, prop1,prop2,prop3, prop4,anecdote,wiki FROM 
+        (SELECT question,prop1,prop2,prop3, prop4,id_level,anecdote,wiki FROM `questions` INNER JOIN quizzes ON questions.id_quiz = quizzes.id WHERE quizzes.id = 2 )
+        AS qs INNER JOIN levels ON qs.id_level = levels.id
      ';
         // Je prépare ma requête
         $pdoStatement = Database::getPDO()->prepare($sql);

@@ -5,14 +5,16 @@ use AltoRouter;
 use Oquiz\Models\QuizModel;
 use Oquiz\Models\QuestionModel;
 use Oquiz\Repositories\QuizRepository;
+use Oquiz\Utils\DataFormatter;
 use Oquiz\Utils\Quizz;
 
 class QuizController extends CoreController
 {
-    public function __construct(AltoRouter $router, QuizRepository $quizzRep)
+    public function __construct(AltoRouter $router, QuizRepository $quizzRep, DataFormatter $formatter)
     {
         parent::__construct($router);
         $this->entityManager = $quizzRep;
+        $this->formatter = $formatter;
     }
 
     public function quiz($allParams)
@@ -20,14 +22,14 @@ class QuizController extends CoreController
 
 //on récupère l'id de $allParams qu'on transforme en entier
         $id = (int) $allParams['id'];
-        $fullQuizz = $this->entityManager->findFullQuizz($id);
-        dump($fullQuizz);
+        $rawQuestions = $this->entityManager->findFullQuizz($id);
+        $questions = $this->formatter->formatQuizzquestions($rawQuestions);
         $style= '';
         $score=0;
+        $played=null;
 
 
         $answers =[];
-        exit();
 
         echo $this->templates->render('front/quiz', [
         'quiz' => $quiz,
