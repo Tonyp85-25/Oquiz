@@ -26,6 +26,9 @@ class QuizController extends CoreController
         $questions = $this->formatter->formatQuizzquestions($rawQuestions);
         $style= '';
         $score=0;
+        $rawQuizz = $this->entityManager->findById($id, true);
+        $quiz = $this->formatter->formatQuizzWithAuthor($rawQuizz);
+     
         $played=null;
 
 
@@ -34,7 +37,6 @@ class QuizController extends CoreController
         echo $this->templates->render('front/quiz', [
         'quiz' => $quiz,
         'questions' => $questions,
-        'author' => $author,
         'played' => $played,
         'style' => $style,
         'score' => $score,

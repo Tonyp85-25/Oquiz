@@ -52,7 +52,7 @@ class Application
         if ($match['target'][2]) { //if service injection needed
             $requiredServices = $match['target'][2];
             $injectedServices= $this->container->loadServices($requiredServices);
-            dump($injectedServices);
+           
             // dynamic instanciation of controller, with services
             $controller = new $controllerName($this->router, ...$injectedServices);
         } else {

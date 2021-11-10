@@ -40,12 +40,19 @@ class QuizRepository
         return $results;
     }
  
-    public function findById($id)
+    public function findById($id, $withAuthor=false)
     {
         $sql ='
          SELECT * FROM '.self::TABLE_NAME.'
          WHERE id = :id
          ';
+        
+        if ($withAuthor) {
+            $sql = '
+            SELECT quizzes.id,title,description,`first_name`,`last_name`, users.id AS author_id FROM
+           `users` INNER JOIN quizzes On users.id = '.self::TABLE_NAME.'.id_author WHERE '.self::TABLE_NAME.'.id = :id           
+            ';
+        }
         // Je prépare ma requête
         $pdoStatement = Database::getPDO()->prepare($sql);
         // Je "bind" les données/token/jeton de ma requête
@@ -53,7 +60,9 @@ class QuizRepository
         // J'exécute ma requête
         $pdoStatement->execute();
         // Je récupère LE résultat
-        $result = $pdoStatement->fetchObject(QuizModel::class);
+        $result = $pdoStatement->fetch(
+            PDO::FETCH_ASSOC
+        );
         return $result;
     }
  
@@ -97,8 +106,8 @@ class QuizRepository
     public function findFullQuizz($id)
     {
         $sql ='
-        SELECT question, name AS level, prop1,prop2,prop3, prop4,anecdote,wiki FROM 
-        (SELECT question,prop1,prop2,prop3, prop4,id_level,anecdote,wiki FROM `questions` INNER JOIN quizzes ON questions.id_quiz = quizzes.id WHERE quizzes.id = 2 )
+        SELECT  qid, question, name AS level, prop1,prop2,prop3, prop4,anecdote,wiki FROM 
+        (SELECT questions.id AS qid,question,prop1,prop2,prop3, prop4,id_level,anecdote,wiki FROM `questions` INNER JOIN quizzes ON questions.id_quiz = quizzes.id WHERE quizzes.id = 2 )
         AS qs INNER JOIN levels ON qs.id_level = levels.id
      ';
         // Je prépare ma requête

@@ -146,6 +146,12 @@ class QuestionModel
 
 
     /*SETTERS*/
+    public function setId(int $id)
+    {
+        if (!empty($id)) {
+            $this->id = $id;
+        }
+    }
     public function setIdQuiz($idQuiz)
     {
         if (!empty($idQuiz)) {

@@ -29,6 +29,7 @@ class DataFormatter
         $questions =[];
         foreach ($rawQuestions as $rawQuestion) {
             $question = new QuestionModel();
+            $question->setId($rawQuestion['qid']);
             $question->setQuestion($rawQuestion['question']);
             $question->setLevel($rawQuestion['level']);
             $question->setProp1($rawQuestion['prop1']);
