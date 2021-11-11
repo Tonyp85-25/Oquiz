@@ -1,0 +1,1 @@
+{"version":1,"defects":{"DataFormatterTest::testFormatQuizzWithAuthor":5,"DataFormatterTest::testFormatQuizzQuestions":5,"DataFormatterTest::testFormatQuizzValues":5},"times":{"DataFormatterTest::testFormatQuizzWithAuthor":0.002,"DataFormatterTest::testFormatQuizzQuestions":0,"DataFormatterTest::testFormatQuizzValues":0}}

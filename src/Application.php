@@ -27,7 +27,7 @@ class Application
         // La page d'accueil
         $this->router->map('GET', '/', ['MainController', 'home',['QuizRepository']], 'home');
         $this->router->map('GET', '/quiz/[i:id]', ['QuizController', 'quiz',['QuizRepository','DataFormatter']], 'quiz');
-        $this->router->map('POST', '/quiz/[i:id]', ['QuizController', 'quizPost'], 'quiz_post');
+        $this->router->map('POST', '/quiz/[i:id]', ['QuizController', 'quizPost',['QuizRepository','DataFormatter']], 'quiz_post');
         $this->router->map('GET', '/compte/[i:id]', ['UserController', 'profile'], 'profile');
         $this->router->map('GET', '/signin/', ['UserController', 'signin'], 'signin');
         $this->router->map('POST', '/signin/', ['UserController', 'signinPost'], 'signin_post');
