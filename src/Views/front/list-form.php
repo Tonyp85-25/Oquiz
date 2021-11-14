@@ -25,13 +25,11 @@
               <div class="card question" >
              
                   <div class="card-header" id = "header_<?= $currentQuestion->getId() ?>" >
-                      <?php $level = $currentQuestion->findLevelByQuestion($currentQuestion->getId());
-                      ?>
                
-                      <h4><?= $currentQuestion->getQuestion() ?></h4> <span class="float-right badge badge-success"><?= $level->name ?></span>
+                      <h4><?= $currentQuestion->getQuestion() ?></h4> <span class="float-right badge badge-success"><?= $currentQuestion->getLevel()?></span>
                   </div>
                   <div class="card-body">
-                      <?php  $props = $currentQuestion->shuffleProps($currentQuestion->getId())?>
+                      <?php  $props = $currentQuestion->getProps(); shuffle($props)?>
                       <?php for ($i=0; $i<4; $i++)  :?>                                 
                       <div class="form-check">
                       

@@ -11,7 +11,7 @@ class Database {
 
         try {
             $this->dbh = new \PDO(
-                "mysql:host={$localDbConfig['DB_HOST']};dbname={$localDbConfig['DB_NAME']};charset=utf8",
+                "{$localDbConfig['DB_TYPE']}:host={$localDbConfig['DB_HOST']};dbname={$localDbConfig['DB_NAME']};charset=utf8",
                 $localDbConfig['DB_USERNAME'],
                 $localDbConfig['DB_PASSWORD'],
                 array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING) // Affiche les erreurs SQL à l'écran

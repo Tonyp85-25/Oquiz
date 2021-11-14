@@ -79,7 +79,7 @@ var app = {
         $('#score').text('');
         $('#score').text(response.score + ' / '+ response.total );
         
-        //on affiche la bonne couleur selon la réponse et on affiche l'anedote si l'utilisateur a répondu à la question
+        //on affiche la bonne couleur selon la réponse et on affiche l'anecdote si l'utilisateur a répondu à la question
         for (prop in response.results) {
           // console.log(response.results[prop]);
           

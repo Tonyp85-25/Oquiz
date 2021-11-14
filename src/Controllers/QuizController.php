@@ -4,17 +4,21 @@ namespace Oquiz\Controllers;
 use AltoRouter;
 use Oquiz\Models\QuizModel;
 use Oquiz\Models\QuestionModel;
+use Oquiz\Repositories\QuestionRepository;
 use Oquiz\Repositories\QuizRepository;
 use Oquiz\Utils\DataFormatter;
 use Oquiz\Utils\Quizz;
 
 class QuizController extends CoreController
 {
-    public function __construct(AltoRouter $router, QuizRepository $quizzRep, DataFormatter $formatter)
+    public function __construct(AltoRouter $router, QuizRepository $quizzRep, DataFormatter $formatter,$validator=null)
     {
         parent::__construct($router);
         $this->entityManager = $quizzRep;
         $this->formatter = $formatter;
+        if($validator){
+            $this->validator =$validator;
+        }
     }
 
     public function quiz($allParams)
@@ -22,18 +26,16 @@ class QuizController extends CoreController
 
 //on récupère l'id de $allParams qu'on transforme en entier
         $id = (int) $allParams['id'];
-        $rawQuestions = $this->entityManager->findFullQuizz($id);
-        $questions = $this->formatter->formatQuizzquestions($rawQuestions);
+        $questionsRepo = new QuestionRepository();
+        $questions =  $questionsRepo->findQuestionsByQuiz($id,'*',true);
+        $questions = $this->formatter->formatQuizzQuestions($questions);
         $style= '';
         $score=0;
         $rawQuizz = $this->entityManager->findById($id, true);
         $quiz = $this->formatter->formatQuizzWithAuthor($rawQuizz);
      
         $played=null;
-
-
         $answers =[];
-
         echo $this->templates->render('front/quiz', [
         'quiz' => $quiz,
         'questions' => $questions,
@@ -61,7 +63,7 @@ class QuizController extends CoreController
     
         $played= true;
         $id = (int) $allParams['id'];
-        $results = Quizz::validate($id, $answered);
+        $results = $this->validator->validate($id, $answered);
 
         $this->sendJSON([
             'code' => 2,

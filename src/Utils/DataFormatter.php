@@ -24,21 +24,16 @@ class DataFormatter
         return $quiz;
     }
 
-    public function formatQuizzQuestions($rawQuestions)
+    public function formatQuizzQuestions($questions)
     {
-        $questions =[];
-        foreach ($rawQuestions as $rawQuestion) {
-            $question = new QuestionModel();
-            $question->setId($rawQuestion['qid']);
-            $question->setQuestion($rawQuestion['question']);
-            $question->setLevel($rawQuestion['level']);
-            $question->setProp1($rawQuestion['prop1']);
-            $question->setProp2($rawQuestion['prop2']);
-            $question->setProp3($rawQuestion['prop3']);
-            $question->setProp4($rawQuestion['prop4']);
-            $question->setWiki($rawQuestion['wiki']);
-            $question->setAnecdote($rawQuestion['anecdote']);
-            $questions[] = $question;
+        
+        foreach ($questions as $question) {
+            $props=[];
+          array_push($props,$question->getProp1());
+          array_push($props,$question->getProp2());
+          array_push($props,$question->getProp3());
+          array_push($props,$question->getProp4());
+          $question->setProps($props); 
         }
         return $questions;
     }

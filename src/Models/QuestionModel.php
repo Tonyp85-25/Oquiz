@@ -2,9 +2,6 @@
 
 namespace Oquiz\Models;
 
-use Oquiz\Database;
-use PDO;
-
 class QuestionModel
 {
     private $id;
@@ -14,91 +11,10 @@ class QuestionModel
     private $prop2;
     private $prop3;
     private $prop4;
-    // private $id_level;
     private $anecdote;
     private $wiki;
     private $level;
-
-    const TABLE_NAME = 'questions';
-
-    public static function findQuestionsByQuiz($quizId)
-    {
-        $sql='
-        SELECT * FROM '.self::TABLE_NAME.'
-        WHERE id_quiz = :id
-    ';
-        // Je prépare ma requête
-        $pdoStatement = Database::getPDO()->prepare($sql);
-        // Je "bind" les données/token/jeton de ma requête
-        $pdoStatement->bindValue(':id', $quizId, PDO::PARAM_INT);
-        // J'exécute ma requête
-        $pdoStatement->execute();
-        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
-        // On retourne les résultats
-        return $results;
-    }
-
-    public function shuffleProps($questionId)
-    {
-        $sql ='
-            SELECT `prop1`,`prop2`,`prop3`,`prop4`
-            FROM '.self::TABLE_NAME.'
-            WHERE id = :id
-
-        ';
-        // Je prépare ma requête
-        $pdoStatement = Database::getPDO()->prepare($sql);
-        // Je "bind" les données/token/jeton de ma requête
-        $pdoStatement->bindValue(':id', $questionId, PDO::PARAM_INT);
-        // J'exécute ma requête
-        $pdoStatement->execute();
-        // Je récupère LE résultat
-        $result = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
-
-        //FETCH_ASSOC renvoie un tableau associatif contenu dans la première case d'un tableau d'index numériques, d'où le result[0]
-        $shuffledResult = shuffle($result[0]);
-
-        return $result[0];
-    }
-    //Méthode pour retornuer les niveaux
-    public static function findLevelByQuestion($id)
-    {
-        $sql ='
-			SELECT `name` FROM `levels` RIGHT JOIN '.self::TABLE_NAME.' ON levels.id = '.self::TABLE_NAME.'.id_level WHERE '.self::TABLE_NAME.'.id = :id
-		';
-        // Je prépare ma requête
-        $pdoStatement = Database::getPDO()->prepare($sql);
-        // Je "bind" les données/token/jeton de ma requête
-        $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
-        // J'exécute ma requête
-        $pdoStatement->execute();
-        // Je récupère LE résultat
-        $result = $pdoStatement->fetchObject(static::class);
-        return $result;
-    }
-    
-    public static function findQuestionById($id)
-    {
-        $sql='
-            SELECT * FROM '.self::TABLE_NAME.'
-            WHERE id = :id
-        ';
-        // Je prépare ma requête
-        $pdoStatement = Database::getPDO()->prepare($sql);
-        // Je "bind" les données/token/jeton de ma requête
-        $pdoStatement->bindValue(':id', $id, PDO::PARAM_INT);
-        // J'exécute ma requête
-        $pdoStatement->execute();
-        $result = $pdoStatement->fetchObject(static::class);
-        // On retourne les résultats
-        return $result;
-    }
-
-
-
-
-
-
+    private $props;
 
     /*GETTERS */
     public function getId()
@@ -141,6 +57,11 @@ class QuestionModel
     public function getWiki()
     {
         return $this->wiki;
+    }
+
+    public function getProps()
+    {
+        return $this->props;
     }
 
 
@@ -207,6 +128,13 @@ class QuestionModel
     {
         if (!empty($wiki)) {
             $this->wiki= $wiki;
+        }
+    }
+
+    public function setProps($props)
+    {
+        if (!empty($props)) {
+            $this->props = $props;
         }
     }
 }

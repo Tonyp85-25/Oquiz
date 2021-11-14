@@ -4,7 +4,7 @@
     "type": "project",
     "require": {
         "altorouter/altorouter": "^1.2",
-        "league/plates": "^3.3",
+        "league/plates": "^3.3"
     },
         
     "authors": [

@@ -2,13 +2,18 @@
 namespace Oquiz\Utils;
 
 use Oquiz\Models\QuestionModel;
+use Oquiz\Repositories\QuestionRepository;
 
-class QuizzService
+class QuizService
 {
-    public static function validate(int $id, $answered)
+    // 
+    public function validate(int $id, $answered)
     {
         $score= 0;
-        $questions = QuestionModel::findQuestionsByQuiz($id);
+        $questionManger =new QuestionRepository();
+        $questions = $questionManger->findQuestionsByQuiz($id,'id,prop1');
+        dump($questions);
+        exit();
         // on récupère les id des questions du quiz
         foreach ($questions as $question) {
             $answers[] = $question->getId();
